@@ -22,6 +22,37 @@ def dijkstra(graph, vertex):
 
   return [distances, route]
 
+def floydWarshall(graph):
+  length = len(graph)
+  dist = list(map(lambda i: list(map(lambda j: j, i)), graph))
+  for k in range(length):
+    for i in range(length): 
+      for j in range(length):
+        dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+
+  return dist
+
+def BellmanFord(graph, vertex):
+  length = len(graph)
+  dist = [INF] * length
+  dist[vertex] = 0
+
+  for _ in range(length - 1):
+    for i in range(length):
+      for j in range(length):
+        if graph[i][j] != INF:
+          if dist[i] != INF and dist[i] + graph[i][j] < dist[j]:
+            dist[j] = dist[i] + graph[i][j]
+
+  for i in range(length):
+    for j in range(length):
+      if graph[i][j] != INF:
+        if dist[i] != INF and dist[i] + graph[i][j] < dist[j]:
+          print("Contiene ciclo negativo")
+          return
+
+  return dist
+
 INF = float("inf")
 graph = [
   [0, 4, INF, INF, 2, INF, INF, INF],
@@ -36,3 +67,8 @@ graph = [
 print(f'dijkstra: {dijkstra(graph, 0)}')
 print(f'dijkstra: {dijkstra(graph, 7)}')
 print(f'dijkstra: {dijkstra(graph, 2)}')
+
+print(f'floy-warshall(graph): {floydWarshall(graph)}')
+print(f'bellmanFord(graph): {BellmanFord(graph, 0)}')
+print(f'bellmanFord(graph): {BellmanFord(graph, 7)}')
+print(f'bellmanFord(graph): {BellmanFord(graph, 2)}')
