@@ -1,8 +1,8 @@
 def dijkstra(graph, vertex):
-  distances = [INF for i in graph]
-  distances[vertex] = 0
-  queue = [vertex]
-  route = [-1 for i in graph]
+  distances = [INF for i in graph] # [4, inf, 3, ...]
+  distances[vertex] = 0 # [inf, inf, inf, inf, 0, inf, ...]
+  queue = [vertex] # [origenVertex] -> [2, 6, 5, 3]
+  route = [-1 for i in graph] # [-1, 2, -1, 0, 3] 0, ...
 
   while len(queue) > 0:
     actual = queue[0]
@@ -31,12 +31,12 @@ def interpretRoute(route, goal):
     out.insert(0, last)
     last = route[last]
   
-  return out
+  return out # [origen, cam1, cam2, cam3, goal]
 
 def floydWarshall(graph):
   length = len(graph)
   dist = list(map(lambda i: list(map(lambda j: j, i)), graph))
-  for k in range(length):
+  for k in range(length): # Nodo K
     for i in range(length): 
       for j in range(length):
         dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
